@@ -46,7 +46,7 @@ class PostController extends Controller
         
         // validazione dei dati
         $request->validate([
-            'title' => 'required|max:255',
+            'title' => 'required|max:60',
             'content' => 'required'
         ]);
 
@@ -143,6 +143,17 @@ class PostController extends Controller
 
     public function update(Request $request, Post $post)
     {
+
+
+        // validazione dei dati
+        $request->validate([
+            'title' => 'required|max:60',
+            'content' => 'required'
+        ]);
+
+
+
+
         // prendere tutti i dati
         $data = $request->all();
 
