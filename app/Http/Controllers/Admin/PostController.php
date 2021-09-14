@@ -49,7 +49,34 @@ class PostController extends Controller
 
         // creare la nuova istanza con i dati ottenuti dalla request
         $new_post = new Post();
-        $new_post->slug = Str::slug($data['title'], '-');
+
+        $slug = Str::slug($data['title'], '-'); 
+
+
+
+        // se c'è un duplicato
+
+        $slug_base = $slug;
+
+        $slug_presente =  Post::where('slug', $slug)->first();
+
+        $contatore = 1;
+
+        while($slug_presente){
+            $slug = $slug_base . '-' . $contatore;
+
+            $slug_presente =  Post::where('slug', $slug)->first();
+
+            $contatore++;
+        }
+
+        // end se c'è un duplicato
+
+
+
+        $new_post->slug = $slug;
+        
+        
         $new_post->fill($data);
 
 
@@ -105,6 +132,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, Post $post)
     {
         // prendere tutti i dati
@@ -114,23 +142,28 @@ class PostController extends Controller
         // Se è stato modificato aggiungi questo. Permette di aggiungere un -numero se è già esistente il titolo modificato. 
         if($data['title'] != $post->title){
 
-            $data['slug'] = Str::slug($data['title'], '-'); 
+            $slug = Str::slug($data['title'], '-'); 
 
-            $slug_base = $data['slug'];
+            $slug_base = $slug;
 
-            $slug_presente = Post::where('slug',  $data['slug'])->first();
+            $slug_presente = Post::where('slug',  $slug)->first();
 
             $contatore = 1;
             while($slug_presente){
                 // aggiungiamo al post di prima un -contatore
-
+                $slug = $slug_base . '-' . $contatore;
+                // se lo slug è uguale ad uno già presente allora segue il procedimento sotto
 
                 // controlliamo nuovamente se il post esiste ancora
-
+                $slug_presente = Post::where('slug',  $slug)->first();
 
                 // incrementiamo il contatore
+                $contatore++;
             }
 
+            // in ogni caso, sia se è entrato nel ciclo sia no, farà questo
+
+            $data['slug'] = $slug;
         }   
 
 
