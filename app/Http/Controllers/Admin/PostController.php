@@ -43,6 +43,11 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        
+        // validazione dei dati
+
+
+
         // prendere i dati
         $data = $request->all();
 
