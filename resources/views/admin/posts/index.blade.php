@@ -37,7 +37,8 @@
                         {{-- Show con id --}}
                         {{-- <a href="{{route('admin.posts.show', $post->id)}}" class="btn btn-primary">Show</a> --}}
                         <a href="{{route('admin.posts.edit', $post->id)}}" class="btn btn-warning">Edit</a>
-                        <form action="{{route('admin.posts.destroy', $post->id)}}" method="post" class="d-inline-block">
+                        {{-- la classe delete-post-form farà uscire un alert tramite JS --}}
+                        <form action="{{route('admin.posts.destroy', $post->id)}}" method="post" class="d-inline-block delete-post-form">
                             @csrf
                             @method('DELETE')
                             <input type="submit" value="Delete" class="btn btn-danger">
