@@ -18,7 +18,7 @@
                     <th scope="row">{{$post->id}}</th>
                     <td>{{$post->title}}</td>
                     <td>
-                        <a href="" class="btn btn-primary">Show</a>
+                        <a href="{{route('admin.posts.show', $post->id)}}" class="btn btn-primary">Show</a>
                         <a href="" class="btn btn-warning">Edit</a>
                         <form action="" method="post" class="d-inline-block">
                             @csrf
