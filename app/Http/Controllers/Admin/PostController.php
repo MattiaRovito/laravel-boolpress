@@ -45,7 +45,10 @@ class PostController extends Controller
     {
         
         // validazione dei dati
-
+        $request->validate([
+            'title' => 'required|max:255',
+            'content' => 'required'
+        ]);
 
 
         // prendere i dati
